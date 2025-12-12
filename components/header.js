@@ -14,12 +14,15 @@ export function Header() {
   const t = translations[language]
 
   const navItems = [
-    { label: t.about, href: "#about" },
-    { label: t.communities, href: "#communities" },
-    { label: t.projects, href: "#projects" },
-    { label: t.retail, href: "#retail" },
-    { label: t.media, href: "#media" },
-    { label: t.events, href: "#events" }
+    { label: t.projects, href: "/projects" },
+    { label: t.clientReviews, href: "/reviews" },
+
+    { label: t.about, href: "/about" },
+
+    // { label: t.communities, href: "#communities" },
+    // { label: t.retail, href: "#retail" },
+    // { label: t.media, href: "#media" },
+    // { label: t.events, href: "#events" }
   ]
 
   return (
@@ -46,7 +49,7 @@ export function Header() {
             <nav className="hidden lg:flex items-center gap-8">
               {navItems.map(item => (
                 <Link
-                  key={item.href}
+                  key={item.href}   
                   href={item.href}
                   className="text-primary text-sm font-medium hover:text-gray-300 transition-colors"
                 >

@@ -4,6 +4,8 @@ import { VisionSection } from "@/components/vision-section"
 import { LifestyleSection } from "@/components/lifestyle-section"
 import { AmenitiesSection } from "@/components/amenities-section"
 import { Footer } from "@/components/footer"
+import { ReviewsSection } from "@/components/reviews-section"
+
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
         <LifestyleSection />
 
         <AmenitiesSection />
+        <ReviewsSection />
       </main>
       <Footer />
     </div>

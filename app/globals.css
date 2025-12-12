@@ -5,7 +5,7 @@
 
 :root {
   /* Updated to use #141414 background and #D4AF37 gold foreground */
-  --background: #141414;
+  --background: #544E4D;
   --foreground: #D4AF37;
   --card: #626262;
   --card-foreground: oklch(0.145 0 0);
@@ -14,9 +14,9 @@
   --primary: #D4AF37; 
   --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.2690 0 0);
-  --secondary-foreground: oklch(0.145 0 0);
-  --muted: #1E3A8A;
-  --muted-foreground: oklch(0.556 0 0);
+  --secondary-foreground: oklch(86.686% 0.0001 271.152);
+  --muted: #525252;
+  --muted-foreground: oklch(88.224% 0.0001 271.152);
   --accent: oklch(0.7 0.15 85);
   --accent-foreground: oklch(0.145 0 0);
   --destructive: oklch(0.577 0.245 27.325);
