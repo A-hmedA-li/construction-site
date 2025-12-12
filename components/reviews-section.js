@@ -62,24 +62,7 @@ const recentReviews = [
     date: "2024-01-03",
     project: "Ronar Riviera"
   },
-  {
-    id: 7,
-    name: "Khalid Ibrahim",
-    rating: 5,
-    comment:
-      "Premium location with excellent connectivity to all major areas. The smart home features are impressive.",
-    date: "2024-01-01",
-    project: "Ronar Creek Views"
-  },
-  {
-    id: 8,
-    name: "Jennifer White",
-    rating: 5,
-    comment:
-      "Luxurious lifestyle at an affordable price point. The gym and pool facilities are outstanding!",
-    date: "2023-12-28",
-    project: "Ronar Star"
-  }
+
 ]
 
 export function ReviewsSection() {
@@ -90,7 +73,7 @@ export function ReviewsSection() {
     <section className="py-16 md:py-24 bg-gradient-to-b from-background to-black">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             {t.clientReviews}
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">

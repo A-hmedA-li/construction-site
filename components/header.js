@@ -8,6 +8,7 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { useLanguage } from "@/components/providers/language-provider"
 import { translations } from "@/lib/styles"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { UserProfileMenu } from "@/components/user-profile-menu"
 
 export function Header() {
   const { language } = useLanguage()
@@ -66,18 +67,19 @@ export function Header() {
 
                 <LanguageSwitcher />
 
-
-                <Button
-                  variant="outline"
-                  className="border-primary text-white hover:bg-primary hover:text-black bg-transparent"
-                >
-                  {t.bookNow}
-                </Button>
-          
+              <Link href="/book-now">
+                  <Button
+                    variant="outline"
+                    className="border-primary text-white hover:bg-primary hover:text-black bg-transparent"
+                  >
+                    {t.bookNow}
+                  </Button>
+                 </Link>
+                 <UserProfileMenu />
                 {/* <span className="text-white text-sm">Num-- (RoNar) --ber</span> */}
               </div>
             </div>
-            {/* <ThemeToggle /> */}
+            <ThemeToggle />
 
             {/* Mobile Menu */}
             <Sheet>
@@ -100,12 +102,18 @@ export function Header() {
                       {item.label}
                     </Link>
                   ))}
-                  <Button
-                    variant="outline"
-                    className="border-primary text-white hover:bg-primary hover:text-black w-full bg-transparent"
-                  >
-                    {t.bookNow}
-                  </Button>
+                  <Link href={"/book-now"}>
+                    <Button
+                      variant="outline"
+                      className="border-primary text-white hover:bg-primary hover:text-black w-full bg-transparent"
+                    >
+                      {t.bookNow}
+                    </Button>
+                  </Link>
+
+                  <div className="pt-4 border-t border-gray-800">
+                    <UserProfileMenu />
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>

@@ -1,6 +1,5 @@
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/providers/theme-provider"
-import { Montserrat } from 'next/font/google';
 import { LanguageProvider } from "@/components/providers/language-provider"
 import "./globals.css"
 
@@ -23,13 +22,6 @@ const _sourceSerif_4 = V0_Font_Source_Serif_4({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"]
 })
-
-const montserrat = Montserrat({
-  weight: ['400', '700'], 
-  subsets: ['latin'],    
-  display: 'swap',       
-  variable: '--font-montserrat', 
-});
 
 export const metadata = {
   title: "RoNar Developments - Luxury Real Estate",
@@ -58,7 +50,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={_geistMono.className}>
+      <body className={`font-sans antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="RoNar-theme">
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
