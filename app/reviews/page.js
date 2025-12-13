@@ -139,13 +139,13 @@ export default function ReviewsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="pt-24">
-        <section className="py-12 bg-gradient-to-b from-black to-background">
+      <main className="pt-20">
+        <section className="py-12">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
               {t.clientReviews}
             </h1>
-            <p className="text-lg text-gray-400 max-w-3xl">{t.reviewsDesc}</p>
+            <p className="text-lg text-secondary-foreground max-w-3xl">{t.reviewsDesc}</p>
           </div>
         </section>
 
@@ -153,7 +153,7 @@ export default function ReviewsPage() {
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-8">
               <div>
-                <p className="text-white text-lg">
+                <p className="text-foreground text-lg">
                   <span className="text-primary font-bold">
                     {filteredReviews.length}
                   </span>{" "}
