@@ -11,7 +11,7 @@ export function ProjectCard({
   status,
   category,
   units,
-  href = "#"
+  href = "/projects/12"
 }) {
   return (
     <Link href={href}>

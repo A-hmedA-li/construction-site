@@ -9,6 +9,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Building2, Home, Calendar, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
+import {FullScreenImage} from '@/components/full-image'
+
+
+const placeholder = "/projects/placeholder.png";
 
 // Mock project data - in production this would come from a database
 const projects = [
@@ -26,7 +30,7 @@ const projects = [
     status: "completed",
     units: "250 Units",
     completionDate: "2023",
-    image: "/luxury-tower-waterfront.jpg",
+    image: placeholder,
     amenitiesEn: [
       "Infinity Pool",
       "State-of-the-art Gym",
@@ -44,8 +48,8 @@ const projects = [
       "منطقة لعب للأطفال"
     ],
     galleryImages: [
-      "/luxury-tower-waterfront.jpg",
-      "/modern-luxury-architecture-aerial-view-cityscape.jpg"
+     placeholder,
+      placeholder
     ]
   }
 ]
@@ -62,7 +66,7 @@ export default function ProjectDetailPage({ params }) {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-background pt-24 pb-16">
+      <div className="min-h-screen bg-background pt-20 pb-16">
         {/* Hero Section */}
         <div className="relative h-[60vh] overflow-hidden">
           <img
@@ -143,7 +147,7 @@ export default function ProjectDetailPage({ params }) {
                         key={index}
                         className="aspect-video rounded-lg overflow-hidden"
                       >
-                        <img
+                        <FullScreenImage
                           src={img || "/placeholder.svg"}
                           alt={`Gallery ${index + 1}`}
                           className="w-full h-full object-cover"
