@@ -14,7 +14,7 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Edit2, Trash2, X, MapPin } from "lucide-react"
+import { Plus, Edit2, Trash2, X, MapPin, Upload } from "lucide-react"
 
 export function ProjectManagementSection() {
   const { language } = useLanguage()
@@ -35,7 +35,8 @@ export function ProjectManagementSection() {
       status: "completed",
       units: "250 Units",
       completionDate: "2023",
-      image: undefined
+      image: "/luxury-tower-waterfront.jpg",
+      secondaryImages: []
     }
   ])
 
@@ -53,8 +54,12 @@ export function ProjectManagementSection() {
     status: "underConstruction",
     units: "",
     completionDate: "",
-    image: ""
+    image: "",
+    secondaryImages: []
   })
+
+  const [mainImageFile, setMainImageFile] = useState(null)
+  const [secondaryImageFiles, setSecondaryImageFiles] = useState([])
 
   const handleDelete = id => {
     setProjects(projects.filter(p => p.id !== id))
@@ -64,6 +69,47 @@ export function ProjectManagementSection() {
     setEditingProject(project.id)
     setFormData(project)
     setIsAddingProject(true)
+  }
+
+  const handleMainImageChange = e => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setMainImageFile(file)
+      // Create preview URL
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setFormData({ ...formData, image: reader.result })
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleSecondaryImagesChange = e => {
+    const files = e.target.files
+    if (files) {
+      const fileArray = Array.from(files)
+      setSecondaryImageFiles([...secondaryImageFiles, ...fileArray])
+
+      // Create preview URLs for all files
+      fileArray.forEach(file => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setFormData(prev => ({
+            ...prev,
+            secondaryImages: [...prev.secondaryImages, reader.result]
+          }))
+        }
+        reader.readAsDataURL(file)
+      })
+    }
+  }
+
+  const handleRemoveSecondaryImage = index => {
+    setSecondaryImageFiles(secondaryImageFiles.filter((_, i) => i !== index))
+    setFormData({
+      ...formData,
+      secondaryImages: formData.secondaryImages.filter((_, i) => i !== index)
+    })
   }
 
   const handleSubmit = e => {
@@ -89,8 +135,11 @@ export function ProjectManagementSection() {
       status: "underConstruction",
       units: "",
       completionDate: "",
-      image: ""
+      image: "",
+      secondaryImages: []
     })
+    setMainImageFile(null)
+    setSecondaryImageFiles([])
     setIsAddingProject(false)
     setEditingProject(null)
   }
@@ -311,34 +360,124 @@ export function ProjectManagementSection() {
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {/* Units */}
-                    <div>
-                      <label className="text-sm font-medium mb-1.5 block">
-                        {isRTL ? "عدد الوحدات" : "Number of Units"}
-                      </label>
-                      <Input
-                        value={formData.units}
-                        onChange={e =>
-                          setFormData({ ...formData, units: e.target.value })
-                        }
-                        placeholder="250 Units"
-                        required
-                      />
+                  {/* Units */}
+                  <div>
+                    <label className="text-sm font-medium mb-1.5 block">
+                      {isRTL ? "عدد الوحدات" : "Number of Units"}
+                    </label>
+                    <Input
+                      value={formData.units}
+                      onChange={e =>
+                        setFormData({ ...formData, units: e.target.value })
+                      }
+                      placeholder="250 Units"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-1.5 block">
+                      {isRTL ? "الصورة الرئيسية" : "Main Image"}
+                    </label>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleMainImageChange}
+                          className="hidden"
+                          id="main-image-upload"
+                        />
+                        <label
+                          htmlFor="main-image-upload"
+                          className="flex items-center gap-2 px-4 py-2 border-2 border-primary/20 rounded-md cursor-pointer hover:bg-primary/5 transition-colors"
+                        >
+                          <Upload className="w-4 h-4 text-primary" />
+                          <span className="text-sm">
+                            {isRTL ? "اختر صورة" : "Choose Image"}
+                          </span>
+                        </label>
+                        {mainImageFile && (
+                          <span className="text-sm text-muted-foreground">
+                            {mainImageFile.name}
+                          </span>
+                        )}
+                      </div>
+                      {formData.image && (
+                        <div className="relative w-full h-48">
+                          <img
+                            src={formData.image || "/placeholder.svg"}
+                            alt="Main preview"
+                            className="w-full h-full object-cover rounded-lg border border-primary/20"
+                          />
+                        </div>
+                      )}
                     </div>
-                    {/* Image URL */}
-                    <div>
-                      <label className="text-sm font-medium mb-1.5 block">
-                        {isRTL ? "رابط الصورة" : "Image URL"}
-                      </label>
-                      <Input
-                        value={formData.image}
-                        onChange={e =>
-                          setFormData({ ...formData, image: e.target.value })
-                        }
-                        placeholder="/project-image.jpg"
-                        required
-                      />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-1.5 block">
+                      {isRTL ? "الصور الثانوية" : "Secondary Images"}
+                    </label>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleSecondaryImagesChange}
+                          className="hidden"
+                          id="secondary-images-upload"
+                        />
+                        <label
+                          htmlFor="secondary-images-upload"
+                          className="flex items-center gap-2 px-4 py-2 border-2 border-primary/20 rounded-md cursor-pointer hover:bg-primary/5 transition-colors"
+                        >
+                          <Upload className="w-4 h-4 text-primary" />
+                          <span className="text-sm">
+                            {isRTL
+                              ? "اختر صور متعددة"
+                              : "Choose Multiple Images"}
+                          </span>
+                        </label>
+                        {secondaryImageFiles.length > 0 && (
+                          <span className="text-sm text-muted-foreground">
+                            {secondaryImageFiles.length}{" "}
+                            {isRTL ? "صور" : "images"}
+                          </span>
+                        )}
+                      </div>
+                      {formData.secondaryImages.length > 0 && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                          {formData.secondaryImages.map((img, index) => (
+                            <div key={index} className="relative group">
+                              <img
+                                src={img || "/placeholder.svg"}
+                                alt={`Secondary ${index + 1}`}
+                                className="w-full h-24 object-cover rounded-lg border border-primary/20"
+                              />
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() =>
+                                  handleRemoveSecondaryImage(index)
+                                }
+                              >
+                                <X className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {formData.secondaryImages.length === 0 && (
+                        <p className="text-sm text-muted-foreground">
+                          {isRTL
+                            ? "لم يتم إضافة صور ثانوية بعد"
+                            : "No secondary images added yet"}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -377,9 +516,9 @@ export function ProjectManagementSection() {
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-48 h-48 md:h-auto relative flex-shrink-0">
                       <img
-                        src={project.image || "/projects/placeholder.png"}
+                        src={project.image || "/placeholder.svg"}
                         alt={project.titleEn}
-                        className="w-full h-full object-cover ml-3 rounded-2xl border border-primary"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <CardContent className="flex-1 p-6">
@@ -420,6 +559,14 @@ export function ProjectManagementSection() {
                               </span>{" "}
                               {project.completionDate}
                             </span>
+                            {project.secondaryImages.length > 0 && (
+                              <span className="text-foreground/70">
+                                <span className="font-semibold">
+                                  {isRTL ? "الصور:" : "Images:"}
+                                </span>{" "}
+                                {project.secondaryImages.length}
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="flex gap-2">
